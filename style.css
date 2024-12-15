@@ -1,0 +1,615 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: gray;
+}
+
+header {
+    background-color: #d4b770;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.navbar a:hover {
+    background-color: white;
+    color: #d19d22;
+    border-radius: 4px;
+}
+
+.welcome-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    background: url(church2.jpg) no-repeat center center fixed;
+    background-size: cover;
+    text-align: center;
+    padding: 20px;
+    font-size: xx-large;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.welcome-section h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: whitesmoke;
+}
+
+.welcome-section .button-group {
+    display: flex;
+    gap: 15px;
+}
+
+.welcome-section button {
+    margin: 10px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    border: none;
+    background-color: #d4b770;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.welcome-section button:hover {
+    background-color: #C9B09A;
+    transform: translateY(-3px);
+}
+
+/* Event Cards */
+.events-preview {
+    padding: 20px;
+    text-align: center;
+    font-size: larger;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.event-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center; /* Center align cards */
+    margin-top: 20px;
+}
+
+.event-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 30%; /* Size of the cards */
+    min-height: 400px; /* Increased height for better layout */
+    box-sizing: border-box;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.event-card img {
+    width: 100%;
+    height: 200px; 
+    object-fit: cover; /* Ensure images cover the area */
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); 
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 600px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.modal-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.modal-content button {
+    padding: 10px 10px;
+    background: #FFD700; /* Green background */
+    color: black; 
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.modal-content button:hover {
+    background: lightgray; /* Darker green */
+}
+
+section {
+    padding: 50px 20px;
+}
+
+#about, #events, #contact {
+    background-color: #f4f4f4;
+}
+
+@media (max-width: 768px) {
+    .welcome-section h1 {
+        font-size: 2.5rem;
+    }
+
+    .navbar {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .welcome-section .button-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .modal-content {
+        width: 95%; /* Full width on small screens */
+    }
+}
+
+/* General Modal Styles */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
+/* Modal Content Styles */
+.modal-content {
+    background-color: #fff; 
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888; 
+    border-radius: 8px; 
+    width: 300px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+/* Close Button */
+.modal-close {
+    color: #aaa; 
+    float: right; 
+    font-size: 28px;
+    font-weight: bold; 
+    cursor: pointer; 
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    color: black; 
+    text-decoration: none; 
+    cursor: pointer;
+}
+
+/* Heading Styles */
+h2 {
+    margin: 0 0 20px; 
+    font-family: Georgia, 'Times New Roman', Times, serif; 
+    color: black; 
+    font-size:x-large;
+}
+
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+    width: 100%; 
+    padding: 10px; 
+    margin: 10px 0; 
+    border: 1px solid #ccc; 
+    border-radius: 15px; 
+    box-sizing: border-box; 
+}
+
+/* Button Styles */
+button {
+   border: #C9B09A; 
+    width: 80%; 
+  
+}
+
+
+/* Social Login Styles */
+.social-login {
+    display: flex; 
+    justify-content: space-between; 
+    margin-top: 20px; 
+}
+
+.social-login button {
+    background-color: lightblue; 
+    flex: 1; 
+    margin: 0 5px; 
+}
+
+.social-login .google {
+    background-color: lightcoral; 
+}
+a {
+    color: #4CAF50; 
+    text-decoration: none; 
+}
+
+a:hover {
+    text-decoration: underline; 
+}
+
+
+@media (max-width: 400px) {
+    .modal-content {
+        width: 90%; 
+    }
+}
+
+/* Signed-In Page Styles */
+.signed-in-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background: #f9f9f9;
+}
+
+.signed-in-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1200px;
+    width: 100%;
+    height: 200;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.signed-in-left {
+    flex: 1;
+}
+
+.signed-in-left img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.signed-in-right {
+    flex: 1;
+    padding: 20px;
+}
+
+.event-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.event-box {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 32%; /* Size of the cards */
+    min-height: 200px;
+    box-sizing: border-box;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.event-box:hover {
+    transform: scale(1.05); /* Zoom effect on hover */
+}
+
+.event-box img {
+    width: 100%;
+    height: 250px; /* Fixed height for uniformity */
+    object-fit: cover; /* Ensure images cover the area */
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+/* General Styles */
+#about {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('your-image.jpg') center center no-repeat;
+    background-size: cover;
+    padding: 60px 20px;
+    text-align: center;
+    color: #333;
+}
+
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #FDFBCF; /* Light background for readability */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.about-container h2 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-family: 'Georgia', serif; /* Elegant font */
+}
+
+.about-container h3 {
+    font-size: 1.75rem;
+    color: #d4af37;
+    margin-top: 40px;
+    font-family: 'Georgia', serif;
+}
+
+.about-container p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: #34495e;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.highlight {
+    font-weight: bold;
+    color: #d19d22;
+}
+
+.content-text {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+@media (max-width: 768px) {
+    .about-container {
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 30px;
+    }
+
+    h3 {
+        font-size: 24px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-column {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+
+    .footer-logo {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: flex-start;  /* Align items to the left */
+    align-items: flex-start;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Logo Styling */
+.footer-logo {
+    flex: 1;
+    padding-right: 40px;
+    display: flex;
+    align-items: center;
+}
+
+.footer-logo img {
+    width: 100px; /* Adjust the size of your logo */
+    height: auto;
+    margin-right: 10px;
+}
+
+.footer-logo span {
+    font-size: 28px;  /* Increase the font size here */
+    font-weight: bold;
+    color: whitesmoke; /* Gold color for your logo name */
+}
+
+/* Column styling */
+.footer-column {
+    flex: 1;
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column li {
+    margin: 10px 0;
+}
+
+.footer-column a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.footer-column a:hover {
+    color: #ffcc00; /* Gold color on hover */
+}
+
+/* Social media icon styling */
+.social-icons {
+    display: flex;
+    justify-content: start;
+    padding: 0;
+}
+
+.social-icons li {
+    margin: 0 15px;
+}
+
+.social-icons a {
+    color: #fff;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: white; /* Gold color on hover */
+}
+
+.social-icons img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s;
+}
+
+.social-icons img:hover {
+    transform: scale(1.1);
+}
+
+/* Footer bottom text styling */
+footer p {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #bbb;
+}
+
+@media (max-width: 480px) {
+    .footer-column a {
+        font-size: 14px;
+    }
+
+    .social-icons a {
+        font-size: 18px;
+    }
+}
+
+/* Modal container styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+/* Modal content styles */
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+}
+
+/* Close button styles */
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}

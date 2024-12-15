@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Church Admin Dashboard</title>
+    <link rel="stylesheet" href="style2.css">
+    <style>
+        /* Inline styles for modals and other elements */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content, .modal-member, .modal-events {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            max-width: 500px;
+            width: 90%;
+        }
+        .button-section {
+            display: flex;
+            justify-content: space-between;
+        }
+        .action-button {
+            padding: 5px 10px;
+            margin: 5px;
+        }
+        .header-links {
+            display: flex;
+            gap: 10px;
+        }
+        .header-link {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>EventZen</h1>
+        <div class="header-links">
+            <a href="#" class="header-link">Event Viewer</a>
+            <a href="#" class="header-link">Event Organizer</a>
+            <a href="#" class="header-link">Schedule Viewer</a>
+            <a href="adminsignin.html" class="header-link">Sign Out</a>
+        </div>
+    </header>
+
+    <div class="dashboard">
+        <!-- Manage Event Cards -->
+        <div class="card" onclick="openRegistrationForm('Baptism')">
+            <h3 class="card-title">Baptisms</h3>
+            <button class="action-button">Manage Baptisms</button>
+        </div>
+        <div class="card" onclick="openRegistrationForm('Burial')">
+            <h3 class="card-title">Burials</h3>
+            <button class="action-button">Manage Burials</button>
+        </div>
+        <div class="card" onclick="openRegistrationForm('Christening')">
+            <h3 class="card-title">Christening</h3>
+            <button class="action-button">Manage Christenings</button>
+        </div>
+        <div class="card" onclick="openRegistrationForm('Confirmation')">
+            <h3 class="card-title">Confirmation</h3>
+            <button class="action-button">Manage Confirmations</button>
+        </div>
+        <div class="card" onclick="openRegistrationForm('Communion')">
+            <h3 class="card-title">Communion</h3>
+            <button class="action-button">Manage Communions</button>
+        </div>
+        <div class="card" onclick="openRegistrationForm('Wedding')">
+            <h3 class="card-title">Wedding</h3>
+            <button class="action-button">Manage Weddings</button>
+        </div>
+        <div class="card">
+            <h3 class="card-title">Financial Report</h3>
+            <button class="action-button" onclick="openFinancialReport()">View Reports</button>
+        </div>
+        <div class="card">
+            <h3 class="card-title">Member Management</h3>
+            <button class="action-button" onclick="openMemberManagement()">Manage Members</button>
+        </div>
+        <div class="card">
+            <h3 class="card-title">Upcoming Events</h3>
+            <button class="action-button" onclick="openUpcomingEvents()">View Events</button>
+        </div>
+    </div>
+
+     <!-- Member Management Modal -->
+     <div id="memberManagementModal" class="modal">
+        <div class="modal-member">
+            <h2>Member Management</h2>  
+            <label for="memberName">Member Name:</label>
+            <input type="text" id="memberName" placeholder="Enter name">
+            <label for="memberPassword">Password:</label>
+            <input type="password" id="memberPassword" placeholder="Enter password">
+            <div class="button-section">
+                <button type="button" class="action-button" onclick="addMember()">Add Member</button>
+                <button type="button" class="action-button" onclick="closeMemberManagementModal()">Close</button>
+            </div>
+            <h3>Member List</h3>
+            <ul id="memberList"></ul>
+        </div>
+    </div>
+
+    <script>
+        // Function to add a member
+        function addMember() {
+            var memberName = document.getElementById('memberName').value.trim();
+            var memberPassword = document.getElementById('memberPassword').value.trim();
+
+            if (memberName && memberPassword) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "adminsignup.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            var response = JSON.parse(xhr.responseText);
+                            alert(response.message);
+                            if (response.success) {
+                                var memberList = document.getElementById('memberList');
+                                var listItem = document.createElement('li');
+                                listItem.textContent = memberName;
+                                memberList.appendChild(listItem);
+                                document.getElementById('memberName').value = ''; // Clear the input field
+                                document.getElementById('memberPassword').value = ''; // Clear the password field
+                            }
+                        } else {
+                            alert('An error occurred. Please try again.');
+                        }
+                    }
+                };
+                xhr.send("name=" + encodeURIComponent(memberName) + "&password=" + encodeURIComponent(memberPassword));
+            } else {
+                alert('Please enter both a member name and a password.');
+            }
+        }
+
+        // Function to close the member management modal
+        function closeMemberManagementModal() {
+            document.getElementById('memberManagementModal').style.display = 'none';
+        }
+
+        // Function to open the member management modal
+        function openMemberManagement() {
+            document.getElementById('memberManagementModal').style.display = 'flex';
+        }
+    </script>
+
+    <!-- Registration Form Modal -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <div style="flex: 1; display: flex; flex-direction: column;">
+                <h2>Event Registration Form</h2>
+                <form id="registrationForm" onsubmit="return saveRegistration(event)">
+                    <label for="fullname">Fullname:</label>
+                    <input type="text" id="fullname" name="fullname" required oninput="updateReceipt()">
+
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" required oninput="updateReceipt()">
+                    
+                    <label for="mobile">Mobile Number:</label>
+                    <input type="tel" id="mobile" name="mobile" required oninput="updateReceipt()" pattern="[0-9]*" inputmode="numeric">
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required oninput="updateReceipt()">
+
+                    <label for="event_date">Date Of Event:</label>
+                    <input type="date" id="event_date" name="event_date" required oninput="updateReceipt()">
+
+                    <label for="guests">Number of Guests:</label>
+                    <input type="number" id="guests" name="guests" required oninput="updateReceipt()" min="0">
+
+                    <div class="button-section">
+                        <button type="button" class="action-button" onclick="clearForm()">Clear</button>
+                        <button type="submit" class="action-button">Save</button>
+                        <button type="button" id="cancelButton" class="action-button" onclick="closeRegistrationModal()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="receipt">
+                <h2 class="receipt-title">Receipt</h2>
+                <p>Thank you for your registration!</p>
+                <p>Please keep this receipt for your records.</p>
+                <p><strong>Fullname:</strong> <span id="Fullname">N/A</span></p>
+                <p><strong>Address:</strong> <span id="Address">N/A</span></p>
+                <p><strong>Mobile Number:</strong> <span id="MobileNumber">N/A</span></p>
+                <p><strong>Event:</strong> <span id="eventType">N/A</span></p>
+                <p><strong>Date:</strong> <span id="eventDate">N/A</span></p>
+                <p><strong>Guests:</strong> <span id="eventGuests">N/A</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to update the receipt display
+        function updateReceipt() {
+            document.getElementById("Fullname").innerText = document.getElementById("fullname").value || "N/A";
+            document.getElementById("Address").innerText = document.getElementById("address").value || "N/A";
+            document.getElementById("MobileNumber").innerText = document.getElementById("mobile").value || "N/A";
+            document.getElementById("eventType").innerText = document.querySelector(".card-title").textContent || "N/A";
+            document.getElementById("eventDate").innerText = document.getElementById("event_date").value || "N/A";
+            document.getElementById("eventGuests").innerText = document.getElementById("guests").value || "N/A";
+        }
+
+        // Function to clear the form
+        function clearForm() {
+            document.getElementById("registrationForm").reset();
+            updateReceipt();
+        }
+
+        // Function to open the registration form modal for a specific event
+        function openRegistrationForm(eventType) {
+            document.querySelector(".card-title").textContent = eventType;
+            document.getElementById("registrationModal").style.display = "flex";
+        }
+
+        // Function to save registration data
+        function saveRegistration(event) {
+            event.preventDefault(); // Prevent the form from submitting the default way
+
+            var formData = new FormData(document.getElementById("registrationForm"));
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "save_registration.php", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        alert(response.message);
+                        if (response.success) {
+                            closeRegistrationModal();
+                        }
+                    } else {
+                        alert('An error occurred. Please try again.');
+                    }
+                }
+            };
+            xhr.send(formData);
+        }
+
+        // Function to close the registration modal
+        function closeRegistrationModal() {
+            document.getElementById("registrationModal").style.display = "none";
+            clearForm();
+        }
+    </script>
+
+    <!-- Upcoming Events Modal -->
+<div id="upcomingEventsModal" class="modal upcoming-events-modal">
+    <div class="modal-events">
+        <div class="modal-header">
+            <h2>Upcoming Community Events</h2>
+            <button class="close-button" onclick="closeUpcomingEvents()">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+            <div class="input-event">
+                <label for="event_name">Event Name:</label>
+                <input type="text" id="event_name" placeholder="Enter event name" required>
+            </div>
+
+            <div class="input-group">
+                <label for="event_date_upcoming">Event Date:</label>
+                <input type="date" id="event_date_upcoming" required>
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="action-button" onclick="addEvent()">Add Event</button>
+            <button class="action-button" onclick="clearUpcomingEvents()">Clear</button>
+            <button class="action-button" onclick="closeUpcomingEvents()">Close</button>
+        </div>
+        
+        <h3 class="events-list-title">Upcoming Events List</h3>
+        <ul id="eventsList" class="events-list">
+            <!-- List of events will be added here -->
+        </ul>
+    </div>
+</div>
+
+    <script>
+         function openUpcomingEvents() {
+    document.getElementById("upcomingEventsModal").style.display = "block";
+}
+
+function closeUpcomingEvents() {
+    document.getElementById("upcomingEventsModal").style.display = "none";
+    document.getElementById("event_name").value = "";
+    document.getElementById("event_date_upcoming").value = "";
+}
+
+window.onclick = function(event) {
+    if (event.target == document.getElementById("upcomingEventsModal")) {
+        closeUpcomingEvents();
+    }
+};
+
+    </script>
+
+    <!-- Upcoming Events Modal -->
+    <div id="upcomingEventsModal" class="modal">
+        <div class="modal-events">
+            <h2>Upcoming Events</h2>
+            <!-- Dynamically populate events here -->
+            <ul id="upcomingEventsList"></ul>
+            <button class="action-button" onclick="closeUpcomingEvents()">Close</button>
+        </div>
+    </div>
+
+    <!-- Financial Report Modal -->
+    <div id="financialReportModal" class="modal">
+        <div class="modal-content">
+            <h2>Financial Report</h2>
+            <!-- Display financial data dynamically -->
+            <div id="financialData">
+                <p>Total Income: $5000</p>
+                <p>Total Expenses: $3000</p>
+                <p>Net Profit: $2000</p>
+            </div>
+            <button class="action-button" onclick="closeFinancialReport()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Function to open the financial report modal
+        function openFinancialReport() {
+            document.getElementById("financialReportModal").style.display = "flex";
+        }
+
+        // Function to close the financial report modal
+        function closeFinancialReport() {
+            document.getElementById("financialReportModal").style.display = "none";
+        }
+    </script>
+</body>
+</html>

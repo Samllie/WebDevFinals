@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Homepage</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Start of Async Drift Code -->
+<script>
+    "use strict";
+    
+    !function() {
+      var t = window.driftt = window.drift = window.driftt || [];
+      if (!t.init) {
+        if (t.invoked) return void (window.console && console.error && console.error("Drift snippet included twice."));
+        t.invoked = !0, t.methods = [ "identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on" ], 
+        t.factory = function(e) {
+          return function() {
+            var n = Array.prototype.slice.call(arguments);
+            return n.unshift(e), t.push(n), t;
+          };
+        }, t.methods.forEach(function(e) {
+          t[e] = t.factory(e);
+        }), t.load = function(t) {
+          var e = 3e5, n = Math.ceil(new Date() / e) * e, o = document.createElement("script");
+          o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + n + "/" + t + ".js";
+          var i = document.getElementsByTagName("script")[0];
+          i.parentNode.insertBefore(o, i);
+        };
+      }
+    }();
+    drift.SNIPPET_VERSION = '0.3.1';
+    drift.load('hak48s2k4hh5');
+    </script>
+    <!-- End of Async Drift Code -->   
+</head>
+<body>
+
+<header>
+    <div class="logo">EventZen</div>
+    <nav class="navbar">
+        <a href="#home">Home</a>
+        <a href="#about">About Us</a>
+        <a href="#events">Events</a>
+        <a href="#contact">Contact Us</a>
+        <button id="sign-out-btn" style="display: none;" onclick="signOut()">Sign Out</button>
+    </nav>
+</header>
+
+<section id="home" class="welcome-section">
+    <h1>Welcome to EventZen</h1>
+    <div class="button-group">
+        <button onclick="openModal('sign-in-modal')">Sign In</button>
+        <button onclick="openModal('sign-up-modal')">Sign Up</button>
+        <button onclick="window.location.href='adminsignin.html';">Sign in as Admin</button>
+
+    </div>
+</section>
+
+<!-- Sign-In Modal -->
+<div id="sign-in-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('sign-in-modal')">&times;</span>
+        <h2>Sign In</h2>
+        <form id="sign-in-form" onsubmit="handleSignIn(event)">
+            <input type="email" id="sign-in-email" name="email" placeholder="Email" required />
+            <input type="password" id="sign-in-password" name="password" placeholder="Password" required />
+            <button type="submit">Sign In</button>
+        </form>
+        
+        
+    </div>
+</div>
+
+<!-- Sign-Up Modal -->
+<div id="sign-up-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('sign-up-modal')">&times;</span>
+        <h2>Sign Up</h2>
+        <form action="signup.php" method="POST">
+            <input type="text" name="first_name" placeholder="First Name" required>
+            <input type="text" name="last_name" placeholder="Last Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+        
+    </div>
+</div>
+
+<!-- Event Description Modal -->
+<div id="event-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeEventModal()">&times;</span>
+        <h2 id="event-title"></h2>
+        <p id="event-description"></p>
+        <button onclick="openModal('application-modal')">Apply</button>
+        <button onclick="closeEventModal()">Close</button>
+    </div>
+</div>
+
+
+
+<!-- Application Modal -->
+<div id="application-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('application-modal')">&times;</span>
+        <h2>Application Form</h2>
+        <form id="application-form">
+            <input type="text" id="full-name" name="full_name" placeholder="Full Name" required />
+            <input type="text" id="address" name="address" placeholder="Address" required />
+            <input type="text" id="phone-number" name="phone_number" placeholder="Phone Number" required />
+            <input type="date" id="preferred-date" name="preferred_date" required />
+            <input type="time" id="preferred-time" name="preferred_time" required />
+            <input type="text" id="event-name" name="event_name" placeholder="Event Name" required />
+            <button type="submit">Submit</button>
+        </form>
+        <div id="application-success" style="display: none;">Your application has been submitted successfully!</div>
+        
+        
+    </div>
+</div>
+
+<!-- Signed-In Page Content -->
+<div id="signed-in-page" class="signed-in-page" style="display: none;">
+    <div class="signed-in-container">
+        <div class="signed-in-left">
+            <img src="homepagechurch.jpg" alt="Church Image" style="position: -webkit-sticky;">
+        </div>
+        <div class="signed-in-right">
+            <h2>Welcome to The Parish and National Shrine of Saint Padre Pio</h2>
+            <p>The St. Padre Pio Parish and National Shrine, nestled in the tranquil town of Sto. Tomas, Batangas, is one of the most significant pilgrimage sites in the Philippines, dedicated to the beloved Saint Padre Pio. Known for his extraordinary spiritual gifts, including the ability to read souls, perform miracles, and bear the stigmata, Padre Pio has inspired countless devotees around the world.
+
+                The shrine stands as a testament to his life and teachings, inviting visitors to deepen their faith and seek solace in their spiritual journeys. The architecture of the church harmoniously blends traditional and contemporary styles, creating a welcoming atmosphere that encourages reflection and prayer. Upon entering the shrine, visitors are greeted by beautifully crafted altars adorned with images of Saint Padre Pio and other saints, each telling a story of faith and devotion.</p>
+                 <!-- Button -->
+    <button id="show-map-btn" style="
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+" 
+onclick="toggleMap()">Show Map</button>
+
+<!-- Map Container -->
+<div id="map-container" style="display: none; margin-top: 20px; text-align: center;">
+    <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d18523.44182508209!2d121.15958364999999!3d14.079051049999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd6bbaa1555555%3A0xa011e56a55de1201!2sParish%20and%20National%20Shrine%20of%20St.%20Padre%20Pio!5e1!3m2!1sen!2sph!4v1733750663649!5m2!1sen!2sph" 
+        style="width: 600px; height: 450px; border: 0;" 
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+</div>
+
+<script>
+    // JavaScript to toggle map visibility
+    function toggleMap() {
+        const mapContainer = document.getElementById('map-container');
+        const showMapBtn = document.getElementById('show-map-btn');
+        
+        if (mapContainer.style.display === 'none') {
+            mapContainer.style.display = 'block';
+            showMapBtn.textContent = 'Hide Map'; // Update button text
+        } else {
+            mapContainer.style.display = 'none';
+            showMapBtn.textContent = 'Show Map'; // Reset button text
+        }
+    }
+</script>
+        </div>
+    </div>
+    <div class="event-container">
+        <div class="event-box" onclick="openEventModal('Wedding', 'A wedding at the St. Padre Pio Parish and National Shrine in Sto. Tomas, Batangas, is a deeply spiritual and meaningful ceremony, blending the sacredness of the sacrament of marriage with the serene atmosphere of the shrine. Couples choosing this venue often do so because of its spiritual significance and the connection to Saint Padre Pio, who is known for his emphasis on love, faith, and family.');">
+            <h4>Wedding</h4>
+            <img src="weddings.jpg" alt="Wedding" class="img-fluid">
+        </div>
+        <div class="event-box" onclick="openEventModal('First Communion', 'First Communion at the St. Padre Pio Parish and National Shrine in Sto. Tomas, Batangas, is a deeply significant and joyous occasion in the lives of children and their families. This sacrament marks the first time a young Catholic receives the Eucharist, which signifies the body and blood of Christ and is central to the Catholic faith. Prior to the ceremony, children typically undergo a period of catechesis, where they learn about the importance of the Eucharist and the teachings of the Church. This preparation often includes participating in the Sacrament of Reconciliation (Confession), allowing them to approach the Eucharist with a pure heart.');">
+            <h4>First Communion</h4>
+            <img src="first communion.jpg" alt="First Communion" class="img-fluid">
+        </div>
+        <div class="event-box" onclick="openEventModal('Confirmation', 'It is a profound sacramental celebration that marks an important milestone in a young person faith journey. This sacrament is designed to strengthen and deepen the grace received at Baptism, confirming individuals in their faith and inviting them to take on a more active role in the Church. Typically, candidates for Confirmation are adolescents, often in their early teens, who have completed a period of preparation through catechetical classes. During the preparation, candidates learn about the significance of the Holy Spirit, the teachings of the Church, and the responsibilities that come with being a confirmed member of the Catholic community.');">
+            <h4>Confirmation</h4>
+            <img src="Confirmation.jpg" alt="Confirmation" class="img-fluid">
+        </div>
+        <div class="event-box" onclick="openEventModal('Baptism', 'Baptism at the St. Padre Pio Parish and National Shrine in Sto. Tomas, Batangas, is a sacred and joyful sacrament that marks the initiation of individuals, especially infants, into the Catholic faith. This sacrament represents a significant moment in the life of the child and their family, symbolizing the cleansing of sin and the beginning of a new life in Christ. The parish community warmly welcomes families as they celebrate this important milestone. Prior to the Baptism, parents typically attend a preparation session offered by the parish. During this session, they learn about the significance of the sacrament, the responsibilities of parenthood, and the importance of raising their child in the faith.');">
+            <h4>Baptism</h4>
+            <img src="Baptism.jpg" alt="Baptism" class="img-fluid">
+        </div>
+        <div class="event-box" onclick="openEventModal('Blessings', 'Blessings at the St. Padre Pio Parish and National Shrine in Sto. Tomas, Batangas, are meaningful ceremonies that provide spiritual support and guidance to individuals and families during various life events. These blessings can encompass a range of occasions, including house blessings, blessings of pets, and special events such as anniversaries or graduations. The parish encourages these rituals as a way to invoke God grace and protection over people and their endeavors');">
+            <h4>Blessings</h4>
+            <img src="Blessings.jpg" alt="Blessings" class="img-fluid">
+        </div>
+        <div class="event-box" onclick="openEventModal('Funeral Mass', 'The Funeral Mass at St. Padre Pio Parish is a solemn and compassionate ceremony designed to honor the life of the deceased and provide comfort to grieving families. This sacred service acknowledges the Christian belief in eternal life and offers a space for loved ones to gather in prayer and support during a difficult time. During the Funeral Mass, the community comes together to celebrate the life of the person who has passed away, reflecting on their contributions and the impact they had on others. The Mass includes readings from Scripture, prayers, and hymns that convey hope and consolation. The priest delivers a homily that often includes personal anecdotes, emphasizing the deceased faith and the promise of resurrection.');">
+            <h4>Funeral Mass</h4>
+            <img src="funeral mass.jpg" alt="Funeral Mass" class="img-fluid">
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to open a modal
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'flex';
+}
+
+// Function to close a modal
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// Function to handle Sign-In
+function handleSignIn(event) {
+    event.preventDefault(); // Prevent the form from submitting traditionally
+
+    const email = document.getElementById('sign-in-email').value;
+    const password = document.getElementById('sign-in-password').value;
+
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
+
+    fetch('signin.php', { // Make sure this path points to your PHP script
+        method: 'POST',
+        body: formData,
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.status === 'success') {
+            alert(data.message);
+            // Update the UI after successful login
+            closeModal('sign-in-modal');
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('signed-in-page').style.display = 'block';
+            document.getElementById('sign-out-btn').style.display = 'inline-block';
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error during fetch:', error);
+        alert('An error occurred. Please try again.');
+    });
+}
+
+
+// Function to handle Sign-Up
+function handleSignUp(event) {
+    event.preventDefault();
+    closeModal('sign-up-modal');
+    document.getElementById('home').style.display = 'none';
+    document.getElementById('signed-in-page').style.display = 'block';
+    document.getElementById('sign-out-btn').style.display = 'inline-block'; // Show Sign Out button
+}
+
+// Function to sign out
+function signOut() {
+    document.getElementById('home').style.display = 'block'; // Show home section
+    document.getElementById('signed-in-page').style.display = 'none'; // Hide signed-in page
+    document.getElementById('sign-out-btn').style.display = 'none'; // Hide Sign Out button
+
+    // Reset the display for Sign In and Sign Up buttons
+    const buttonGroup = document.querySelector('.button-group');
+    if (buttonGroup) {
+        buttonGroup.style.display = 'flex'; // Ensure buttons are displayed in a row
+    }
+}
+
+// Automatically close the login form when accessing the site
+window.onload = function () {
+    document.getElementById('sign-in-modal').style.display = 'none';
+    document.getElementById('sign-up-modal').style.display = 'none';
+    document.getElementById('event-modal').style.display = 'none';
+    document.getElementById('application-modal').style.display = 'none';
+};
+
+// Function to open the event modal
+function openEventModal(title, description) {
+    document.getElementById('event-title').innerText = title;
+    document.getElementById('event-description').innerText = description;
+    document.getElementById('event-modal').style.display = 'flex';
+}
+
+// Function to close the event modal
+function closeEventModal() {
+    document.getElementById('event-modal').style.display = 'none';
+}
+
+document.getElementById('application-form').addEventListener('submit', async function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const formData = new FormData(event.target); // Automatically populate formData from the form
+
+    try {
+        const response = await fetch('apply_event.php', {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            alert(data.message); // Show success alert
+            event.target.reset(); // Clear the form
+            document.getElementById('application-success').style.display = 'block'; // Display success message
+        } else {
+            alert(data.message); // Show error alert
+        }
+    } catch (error) {
+        console.error('Error occurred:', error);
+        alert('An error occurred while submitting your application. Please try again later.');
+    }
+});
+
+</script>
+
+<!-- Comment Section -->
+<section id="comments" class="comments-section" style="margin: 20px 0; padding: 15px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; max-width: 600px; margin-left: auto; margin-right: auto;">
+    <h2 style="text-align: center; color: #333; font-family: Arial, sans-serif; margin-bottom: 15px;">Comments</h2>
+    <form id="comment-form" onsubmit="handleCommentSubmission(event)" style="display: flex; flex-direction: column; gap: 10px;">
+        <textarea id="comment-text" name="comment" placeholder="Write your comment here..." required style="width: 100%; height: 100px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; font-family: Arial, sans-serif;"></textarea>
+        <button type="submit" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; font-family: Arial, sans-serif;">Submit</button>
+    </form>
+    <div id="comment-display" style="margin-top: 15px; padding-top: 10px; border-top: 1px solid #ddd;">
+        <!-- Displayed comments will appear here -->
+    </div>
+</section>
+
+
+<script>
+    // Handle comment submission
+    function handleCommentSubmission(event) {
+        event.preventDefault(); // Prevent traditional form submission
+
+        const commentText = document.getElementById('comment-text').value;
+        const formData = new FormData();
+        formData.append('comment', commentText);
+
+        // Save comment to XML via PHP
+        fetch('save_comment.php', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(() => {
+            alert('Comment saved successfully!');
+            document.getElementById('comment-text').value = ''; // Clear the input field
+            loadComments(); // Refresh comments display
+        })
+        .catch(error => {
+            console.error('Error saving comment:', error);
+            alert('An error occurred while saving your comment. Please try again.');
+        });
+    }
+
+    // Load comments from XML
+    function loadComments() {
+        fetch('comments.xml')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error loading comments XML');
+                }
+                return response.text();
+            })
+            .then(data => {
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(data, 'application/xml');
+                const comments = xml.getElementsByTagName('comment');
+                const commentDisplay = document.getElementById('comment-display');
+                commentDisplay.innerHTML = ''; // Clear previous comments
+
+                for (let i = 0; i < comments.length; i++) {
+                    const commentText = comments[i].textContent;
+                    const commentDiv = document.createElement('div');
+                    commentDiv.className = 'comment';
+                    commentDiv.textContent = commentText;
+                    commentDisplay.appendChild(commentDiv);
+                }
+            })
+            .catch(error => {
+                console.error('Error displaying comments:', error);
+                alert('Failed to load comments.');
+            });
+    }
+
+    // Load comments on page load
+    window.onload = function () {
+        loadComments();
+    };
+</script>
+
+
+
+
+<section id="about">
+    <div class="about-container">
+        <h2>About Us</h2>
+        <p class="intro-text">Welcome to the <span class="highlight">St. Padre Pio Shrine</span>, located in the heart of <span class="highlight">Sto. Tomas, Batangas</span>.</p>
+        <p class="content-text">Welcome to our community at St. Padre Pio Church, where we are dedicated to fostering a vibrant and spiritually enriching environment through our event organizing services. Our organization is built on the foundation of faith, fellowship, and service, aiming to bring together parishioners and the wider community in celebration of our shared beliefs and values.
+
+            At St. Padre Pio Church, we believe that community is at the heart of our faith journey. Our events are designed to inspire, engage, and unite individuals of all ages. From spiritual retreats and workshops to social gatherings and charity fundraisers, we strive to create experiences that deepen connections and nurture our collective spirit. Our commitment to excellence ensures that every event is thoughtfully planned and executed, reflecting the love and care of our church community.</p>
+        <h3>Our Mission</h3>
+        <p class="content-text">At EventZen, our mission is to organize meaningful events that enrich the spiritual lives of our community members. We strive to provide opportunities for worship, fellowship, and service, ensuring that every event reflects the values and teachings of St. Padre Pio. Through our events, we aim to bring people closer to God and to each other, creating lasting memories that inspire and uplift.</p>
+        <h3>Our Vision</h3>
+        <p class="content-text">We envision a vibrant community where every member feels welcomed and engaged. Our goal is to be a catalyst for connection, encouraging parishioners to participate actively in church life. We seek to create events that not only entertain but also educate and inspire, fostering a deeper understanding of our faith and its importance in our daily lives. We aspire to be a model of excellence in event organization within the church community.</p>
+        <h3>Join Us</h3>
+        <p class="content-text">We warmly invite you to join us in our mission! Whether you are looking to volunteer, participate in our events, or simply want to stay informed, there are many ways to get involved. By joining us, you’ll become part of a welcoming community that values collaboration, friendship, and shared faith. Together, we can create unforgettable experiences that strengthen our bonds and glorify God.
+
+            Stay connected with us through our website and social media channels for updates on upcoming events, volunteer opportunities, and more. Let’s work together to make every gathering a celebration of our faith and community spirit!</p>
+    </div>
+</section>
+
+<section id="events" class="events-preview">
+    <h2>Our Events</h2>
+    <div class="event-container">
+        <div class="event-card">
+            <img src="weddings.jpg" alt="Wedding">
+            <h3>Wedding</h3>
+            <p>A wedding at the St. Padre Pio Church is a sacred ceremony...</p>
+        </div>
+        <div class="event-card">
+            <img src="first communion.jpg" alt="First Communion">
+            <h3>First Communion</h3>
+            <p>First Communion at the St. Padre Pio Church is a significant sacrament...</p>
+        </div>
+        <div class="event-card">
+            <img src="Confirmation.jpg" alt="Confirmation">
+            <h3>Confirmation</h3>
+            <p>Confirmation at the St. Padre Pio Church is a sacrament...</p>
+        </div>
+        <div class="event-card">
+            <img src="Baptism.jpg" alt="Baptism">
+            <h3>Baptism</h3>
+            <p>Baptism at the St. Padre Pio Church is a sacrament of initiation...</p>
+        </div>
+        <div class="event-card">
+            <img src="Blessings.jpg" alt="Blessings">
+            <h3>Blessings</h3>
+            <p>Blessings at the St. Padre Pio Church are special ceremonies...</p>
+        </div>
+        <div class="event-card">
+            <img src="funeral mass.jpg" alt="Funeral Mass">
+            <h3>Funeral Mass</h3>
+            <p>A Funeral Mass at the St. Padre Pio Church is a solemn service...</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">
+            <a href="index.html">
+                <span>EventZen</span>
+            </a>
+        </div>
+        <div class="footer-column">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about-us.html">About Us</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="contact-us.html">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <ul>
+                <li><a href="legal.html">Legal</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="refund-policy.html">Refund Policy</a></li>
+                <li><a href="cookie-policy.html">Cookie Policy</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <ul class="social-icons">
+                <li><a href="https://www.facebook.com" target="_blank" title="Facebook"><img src="facebook.jpg" alt="Facebook"></a></li>
+                <li><a href="https://twitter.com" target="_blank" title="Twitter"><img src="twitter-icon.png" alt="Twitter"></a></li>
+                <li><a href="https://www.instagram.com" target="_blank" title="Instagram"><img src="instagram-icon.png" alt="Instagram"></a></li>
+            </ul>
+            <p>&copy; 2024 EventZen. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
